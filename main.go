@@ -30,7 +30,7 @@ func router() *http.ServeMux {
 		w.WriteHeader(200)
 
 		response := struct {
-			Status string
+			Status string `json:"status"`
 		}{
 			Status: "OK",
 		}
