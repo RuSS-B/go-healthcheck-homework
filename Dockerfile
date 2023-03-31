@@ -7,4 +7,6 @@ FROM alpine:3.17 as runner
 WORKDIR /app
 COPY --from=build /app/build/server ./server
 
+EXPOSE 8000
+
 CMD ["/app/server"]
