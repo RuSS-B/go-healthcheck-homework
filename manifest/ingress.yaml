@@ -4,7 +4,7 @@ metadata:
   name: ingress-homework
   annotations:
     nginx.org/server-snippets: |
-      location /otusapp/ruslan_balabanov {
+      location = /otusapp/ruslan_balabanov {
          rewrite ^ /health;
       }
 spec:
