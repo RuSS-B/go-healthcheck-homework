@@ -1,40 +1,35 @@
-# go-healthcheck-homework
+# go-homework
 
 Just a homework project. 
 If you call GET /health it will return `{"status": "ok"}` json
+You also can call /users endpoint to do CRUD operations with GET / POST / PUT / DELETE methods
 
-Dockerfile checked with hadolint 😎😎
+Dockerfiles checked with hadolint 😎😎
 
-## Installation and Usage with Docker
+## Installation
 
-`docker pull russbalabanov/docker-homework:latest`
-
-`docker run -p 8000:8000 russbalabanov/docker-homework:latest`
-
-`curl -h http://127.0.0.1:8000/health -v`
-
-## Installation and Usage with K8S
-
+### Preparations
 First the namespace: `kubectl create namespace hw`
 Next, let's use this namespace as a default one `kubectl config set-context --current --namespace=hw`
 
 Make sure you have your hosts contain `127.0.0.1 arch.homework`
 
-### Helm for Nginx-Ingress
-
+### Nginx-Ingress via Helm
 `helm repo add nginx-stable https://helm.nginx.com/stable`
 
 `helm repo update`
 
-`helm install nginx-ingress-controller nginx-stable/nginx-ingress --set controller.service.httpPort.port=80 --set controller.enableSnippets=true`
+`helm install nginx-ingress-controller nginx-stable/nginx-ingress --set controller.service.httpPort.port=2080 --set controller.enableSnippets=true`
 
+### Installation of the main project via Helm
+`helm install hw3 ./homework3`
 
-### Testing
-Loading all manifests with one command `kubectl apply -f .`
+### Dashboard included
+For login, please use this url: https://127.0.0.1:8443/#/login
 
-Normal usage: `curl arch.homework/health`
+Command to generate a token: `kubectl -n kubernetes-dashboard create token admin-user`
 
-Using rewrite: `curl arch.homework/otusapp/ruslan_balabanov`
+### Manual testing
+Normal usage: `curl arch.homework:2080/users/1`
 
-### Troubleshooting
-Sometimes Ingress might work funky with 80th port, changing it to a different port does the job. For example like this `--set controller.service.httpPort.port=8080` 
+Note: I've used 2080 port just to avoid any port 80 issues on localhost, feel free to configure your ingress with port 80 instrad 

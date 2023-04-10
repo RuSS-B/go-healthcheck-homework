@@ -17,3 +17,6 @@ push.migrations:
 
 helm.upgrade:
 	helm upgrade homework3 ./homework3 --values homework3/values.yaml
+
+dashboard.new.token:
+	kubectl -n kubernetes-dashboard create token admin-user

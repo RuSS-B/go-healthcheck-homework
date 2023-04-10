@@ -18,7 +18,12 @@ func NewHandlerRepository(db *gorm.DB) *Handler {
 }
 
 func Response(writer http.ResponseWriter, code int, body any) {
-	b, _ := json.Marshal(body)
+	b, err := json.Marshal(body)
+
+	if err != nil {
+		ErrorResponse(writer, 500, err.Error())
+		return
+	}
 
 	writer.WriteHeader(code)
 	_, _ = writer.Write(b)
