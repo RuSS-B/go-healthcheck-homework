@@ -58,7 +58,7 @@ func (h *Handler) Users(r chi.Router) {
 		}
 		user.ID = uint(ID)
 
-		tx = h.DB.Updates(&user)
+		tx = h.DB.Save(&user)
 		if DBError(tx, writer) {
 			return
 		}
