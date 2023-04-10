@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-homework
+  name: {{ .Values.app.name }}-ingress
   annotations:
     nginx.org/server-snippets: |
       location = /otusapp/ruslan_balabanov {
@@ -10,14 +10,14 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: arch.homework
+    - host: {{ .Values.app.baseHost }}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: health-check-service #the label of the service
+                name: {{ .Values.app.name }}-service
                 port:
                   number: 8080
 

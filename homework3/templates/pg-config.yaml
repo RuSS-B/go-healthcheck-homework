@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.db.cfgName}}
+  labels:
+    app: {{ .Values.db.label }}
+data:
+  POSTGRES_DB: {{ .Values.db.name }}

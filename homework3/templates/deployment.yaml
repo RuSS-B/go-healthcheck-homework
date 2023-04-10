@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-homework
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+    spec:
+      containers:
+      - name: docker-homework
+        image: {{ .Values.app.image }}
+        ports:
+        - name: web
+          containerPort: 8000
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 15
+          failureThreshold: 1
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.db.secretName }}
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.db.secretName }}
+                key: POSTGRES_PASSWORD
+          - name: DATABASE_URL
+            value: "postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ .Values.db.service.name }}:{{ .Values.db.service.port }}/{{ .Values.db.name }}"

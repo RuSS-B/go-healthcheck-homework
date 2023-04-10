@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.db.label }}  # Sets Deployment name
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.db.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db.label }}
+    spec:
+      containers:
+        - name: postgres
+          image: {{ .Values.db.image }}
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: {{ .Values.db.port }}  # Exposes container port
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.db.cfgName}}
+            - secretRef:
+                name: {{ .Values.db.secretName }}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: {{ .Values.db.volume.name }}-claim

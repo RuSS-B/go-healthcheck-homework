@@ -1,0 +1,28 @@
+app:
+  name: homework-app
+  baseHost: arch.homework
+  image: russbalabanov/docker-homework:v3
+
+db:
+  image: postgres:14-alpine #Not the latest version, but pretty stable
+  secretName: db-root-password
+  port: 5432
+  label: postgres
+  cfgName:  postgres-config
+  name: app
+
+  service:
+    name: app-db-service
+    port: 5355
+    externalPort: 32355
+
+  volume:
+    size: 2Gi
+    name: pg-pv
+
+migrations:
+  label: migrations-vol
+  image: russbalabanov/hw-migrations:v1
+  volume:
+    size: 100Mi
+    name: migrations-pv

@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "07b0d710-37e8-4733-b4ae-80e84711a639",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3925179"
+	},
+	"item": [
+		{
+			"name": "Get user ID:1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/{{path}}/1",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"{{path}}",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user ID:4",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}:{{BasePort}}/{{path}}/4",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"port": "{{BasePort}}",
+					"path": [
+						"{{path}}",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"johndoe3\",\n    \"FirstName\": \"John\",\n    \"LastName\": \"Doe\",\n    \"email\": \"email@local.local\",\n    \"phone\": \"+1100500\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}:{{BasePort}}/{{path}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"port": "{{BasePort}}",
+					"path": [
+						"{{path}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user ID:1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 5,\n    \"username\": \"johhnyDoe\",\n    \"FirstName\": \"Undefined\",\n    \"LastName\": null,\n    \"email\": \"email@local.local\",\n    \"phone\": \"+11005001\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/{{path}}/1",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"{{path}}",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "path",
+			"value": "users",
+			"type": "string"
+		}
+	]
+}

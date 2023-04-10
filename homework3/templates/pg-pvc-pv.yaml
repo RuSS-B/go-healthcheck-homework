@@ -1,0 +1,30 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ .Values.db.volume.name }} # Sets PV's name
+  labels:
+    type: local  # Sets PV's type to local
+    app: {{ .Values.db.label }}
+spec:
+  storageClassName: manual
+  persistentVolumeReclaimPolicy: Delete
+  capacity:
+    storage: {{ .Values.db.volume.size }} # Sets PV Volume
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/db"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.db.volume.name }}-claim # Sets name of PVC
+  labels:
+    app: {{ .Values.db.label }}
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany  # Sets read and write access
+  resources:
+    requests:
+      storage: {{ .Values.db.volume.size }}  # Sets volume size

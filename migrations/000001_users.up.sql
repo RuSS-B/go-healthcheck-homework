@@ -1,0 +1,2 @@
+CREATE TABLE "public"."users" ("id" serial NOT NULL,"username" VARCHAR(64) NOT NULL,"first_name" text,"last_name" text,"email" text,"phone" text, PRIMARY KEY ("id"));
+CREATE UNIQUE INDEX "users_username_idx" ON "public"."users" USING BTREE ("username");

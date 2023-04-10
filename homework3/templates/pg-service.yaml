@@ -1,0 +1,15 @@
+# This file is made mainly for dev purposes, to be able to connect UI tools for managing the DB
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.db.service.name }}
+spec:
+  selector:
+    app: {{ .Values.db.label }} #the app label that service should listen to
+  ports:
+    - protocol: TCP
+      port: {{ .Values.db.service.port }} #the port that will be exposed by the service
+      targetPort: {{ .Values.db.port }} #the port that service should listen to
+      nodePort: {{ .Values.db.service.externalPort }}
+  type: NodePort
