@@ -22,7 +22,7 @@ Make sure you have your hosts contain `127.0.0.1 arch.homework`
 `helm install nginx-ingress-controller nginx-stable/nginx-ingress --set controller.service.httpPort.port=2080 --set controller.enableSnippets=true`
 
 ### Installation of the main project via Helm
-`helm install hw3 ./homework3`
+`helm install hw3 ./homework3` or if your system supports Make then just call `make helm.install`
 
 ### Dashboard included
 For login, please use this url: https://127.0.0.1:8443/#/login
