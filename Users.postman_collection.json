@@ -50,7 +50,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"johndoe3\",\n    \"FirstName\": \"John\",\n    \"LastName\": \"Doe\",\n    \"email\": \"email@local.local\",\n    \"phone\": \"+1100500\"\n}",
+					"raw": "{\n    \"username\": \"ajohndoe\",\n    \"firstName\": \"2John\",\n    \"lastName\": \"D4oe\",\n    \"email\": \"email@4local.local\",\n    \"phone\": \"+110054030\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -58,11 +58,10 @@
 					}
 				},
 				"url": {
-					"raw": "{{BaseUrl}}:{{BasePort}}/{{path}}",
+					"raw": "{{BaseUrl}}/{{path}}",
 					"host": [
 						"{{BaseUrl}}"
 					],
-					"port": "{{BasePort}}",
 					"path": [
 						"{{path}}"
 					]
@@ -77,7 +76,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": 5,\n    \"username\": \"johhnyDoe\",\n    \"FirstName\": \"Undefined\",\n    \"LastName\": null,\n    \"email\": \"email@local.local\",\n    \"phone\": \"+11005001\"\n}",
+					"raw": "{\n    \"username\": null,\n    \"firstName\": \"Undefined\",\n    \"lastName\": null,\n    \"email\": \"email@local.local\",\n    \"phone\": \"+11005001\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

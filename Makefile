@@ -15,8 +15,14 @@ build.migrations:
 push.migrations:
 	docker push ${MIGRATIONS_IMAGE}
 
+helm.install:
+	helm install homework3 ./homework3 --values homework3/values.yaml
+
+helm.delete:
+	helm delete homework3
+
 helm.upgrade:
 	helm upgrade homework3 ./homework3 --values homework3/values.yaml
 
-dashboard.new.token:
+dashboard.token:
 	kubectl -n kubernetes-dashboard create token admin-user
