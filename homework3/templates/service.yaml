@@ -7,6 +7,6 @@ spec:
     app: {{ .Values.app.name }} #the app label that service should listen to
   ports:
   - protocol: TCP
-    port: 8080 #the port that will be exposed by the service
-    targetPort: 8000 #the port that service should listen to
+    port: {{ .Values.app.servicePort }} #the port that will be exposed by the service
+    targetPort: {{ .Values.app.port }} #the port that service should listen to
   type: ClusterIP

@@ -8,7 +8,7 @@ spec:
   selector:
     app: {{ .Values.db.label }} #the app label that service should listen to
   ports:
-    - protocol: TCP
+    - protocol: {{ .Values.app.serviceProtocol }}
       port: {{ .Values.db.service.port }} #the port that will be exposed by the service
       targetPort: {{ .Values.db.port }} #the port that service should listen to
       nodePort: {{ .Values.db.service.externalPort }}

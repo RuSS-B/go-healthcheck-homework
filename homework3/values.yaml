@@ -1,7 +1,24 @@
 app:
   name: homework-app
   baseHost: arch.homework
+  port: 8000
+  portName: web
+  servicePort: 8080
+  serviceProtocol: TCP
   image: russbalabanov/docker-homework:v3
+  liveness:
+    path: /health
+    initialDelaySeconds: 5
+    periodSeconds: 15
+    failureThreshold: 1
+  deployment:
+    replicas: 3
+    update:
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 0
 
 db:
   image: postgres:14-alpine #Not the latest version, but pretty stable
@@ -17,12 +34,27 @@ db:
     externalPort: 32355
 
   volume:
+    type: local # Sets PV's type to local
+    storageClassName: manual
     size: 2Gi
     name: pg-pv
+    hostPath: /mnt/db
+    accessModes:
+      - ReadWriteMany
+    mount:
+      path: /var/lib/postgresql/data
+      name: postgresdb
 
 migrations:
-  label: migrations-vol
+  name: migration-job
   image: russbalabanov/hw-migrations:v1
-  volume:
-    size: 100Mi
-    name: migrations-pv
+  ttlSecondsAfterFinished: 10
+  restartPolicy: Never
+  backoffLimit: 4
+
+ingress:
+  annotations:
+    nginx.org/server-snippets: |
+      location = /otusapp/ruslan_balabanov {
+         rewrite ^ /health;
+      }
