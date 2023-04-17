@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -24,6 +25,8 @@ func main() {
 
 	db = ConnectDB(os.Getenv("DATABASE_URL"))
 
+	initMetrics()
+
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", port),
 		Handler: router(),
@@ -39,6 +42,7 @@ func main() {
 func router() http.Handler {
 	h := handler.NewHandlerRepository(db)
 	mux := chi.NewRouter()
+	mux.Use(prometheusMiddleware)
 
 	mux.Use(func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {
@@ -65,6 +69,7 @@ func router() http.Handler {
 	})
 
 	mux.Route("/users", h.Users)
+	mux.Handle("/my-metrics", promhttp.Handler())
 
 	return mux
 }

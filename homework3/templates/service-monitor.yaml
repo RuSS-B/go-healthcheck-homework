@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: wololo-app-monitor22
+  labels:
+    app: homework-app
+
+spec:
+  endpoints:
+    - port: service-port
+      scrapeTimeout: 30s
+      path: /my-metrics
+      honorLabels: true
+      scheme: http
+  selector:
+    matchLabels:
+      app: homework-app

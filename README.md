@@ -25,6 +25,8 @@ Make sure you have your hosts contain `127.0.0.1 arch.homework`
 `helm install hw3 ./homework3` or if your system supports Make then just call `make helm.install`
 
 ### Dashboard included
+
+
 For login, please use this url: https://127.0.0.1:8443/#/login
 
 Command to generate a token: `kubectl -n kubernetes-dashboard create token admin-user`

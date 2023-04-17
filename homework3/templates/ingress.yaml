@@ -18,3 +18,10 @@ spec:
                 name: {{ .Values.app.name }}-service
                 port:
                   number: {{ .Values.app.servicePort }}
+{{/*    - host: grafana.arch.homework*/}}
+{{/*      http:*/}}
+{{/*        paths:*/}}
+{{/*          - backend:*/}}
+{{/*              service:*/}}
+{{/*                name: {{ include "grafana.name" }}*/}}
+{{/*            pathType:*/}}
