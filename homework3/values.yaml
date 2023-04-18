@@ -6,7 +6,7 @@ app:
   portName: web
   servicePort: 8080
   serviceProtocol: TCP
-  image: russbalabanov/docker-homework:v4
+  image: russbalabanov/docker-homework:latest
   liveness:
     path: /health
     initialDelaySeconds: 5

@@ -43,6 +43,7 @@ func router() http.Handler {
 	h := handler.NewHandlerRepository(db)
 	mux := chi.NewRouter()
 	mux.Use(prometheusMiddleware)
+	mux.Use(rare500)
 
 	mux.Use(func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {

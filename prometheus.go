@@ -1,10 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
+	"math/rand"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 type responseWriter struct {
@@ -24,7 +27,7 @@ func (rw *responseWriter) WriteHeader(code int) {
 var totalRequests = prometheus.NewCounterVec(
 	prometheus.CounterOpts{
 		Name: "http_requests_total",
-		Help: "Number of get requests.",
+		Help: "Number of requests.",
 	},
 	[]string{"path"},
 )
@@ -40,12 +43,17 @@ var responseStatus = prometheus.NewCounterVec(
 var httpDuration = promauto.NewHistogramVec(prometheus.HistogramOpts{
 	Name: "http_response_time_seconds",
 	Help: "Duration of HTTP requests.",
-}, []string{"path"})
+}, []string{"path", "statusCode"})
 
 func prometheusMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		begin := time.Now()
+		//Just an anchor to slow down the response
+		rndVal := rand.Intn(100)
+		time.Sleep(time.Duration(rndVal) * time.Millisecond)
+
 		label := r.RequestURI
-		timer := prometheus.NewTimer(httpDuration.WithLabelValues(label))
+
 		rw := NewResponseWriter(w)
 		next.ServeHTTP(rw, r)
 
@@ -54,7 +62,23 @@ func prometheusMiddleware(next http.Handler) http.Handler {
 		responseStatus.WithLabelValues(strconv.Itoa(statusCode)).Inc()
 		totalRequests.WithLabelValues(label).Inc()
 
-		timer.ObserveDuration()
+		httpDuration.WithLabelValues(label, strconv.Itoa(statusCode)).Observe(time.Since(begin).Seconds())
+	})
+}
+
+func rare500(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		rndVal := rand.Intn(2)
+
+		fmt.Println(rndVal)
+
+		if rndVal == 0 {
+			w.WriteHeader(500)
+			_, _ = w.Write([]byte("Error!"))
+			return
+		}
+
+		next.ServeHTTP(w, r)
 	})
 }
 
