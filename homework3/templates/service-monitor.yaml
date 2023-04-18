@@ -8,8 +8,8 @@ metadata:
 spec:
   endpoints:
     - port: {{ .Values.app.servicePortName }}
-      scrapeTimeout: 30s
-      path: /my-metrics
+      scrapeTimeout: {{ .Values.monitor.scrapeTimeout }}
+      path: {{ .Values.monitor.metricsPath }}
       honorLabels: true
       scheme: http
   #  jobLabel: stack
