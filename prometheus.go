@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"math/rand"
@@ -68,13 +67,11 @@ func prometheusMiddleware(next http.Handler) http.Handler {
 
 func rare500(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		rndVal := rand.Intn(2)
-
-		fmt.Println(rndVal)
+		rndVal := rand.Intn(10)
 
 		if rndVal == 0 {
 			w.WriteHeader(500)
-			_, _ = w.Write([]byte("Error!"))
+			_, _ = w.Write([]byte("This is a fake 500 Error!"))
 			return
 		}
 
