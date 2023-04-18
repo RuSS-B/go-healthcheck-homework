@@ -2,11 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.app.name }}-service
+  labels:
+    app: {{ .Values.app.name }}
 spec:
   selector:
     app: {{ .Values.app.name }} #the app label that service should listen to
   ports:
-    - name: service-port
+    - name: {{ .Values.app.servicePortName }}
       protocol: {{ .Values.app.serviceProtocol }}
       port: {{ .Values.app.servicePort }} #the port that will be exposed by the service
       targetPort: {{ .Values.app.port }} #the port that service should listen to

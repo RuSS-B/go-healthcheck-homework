@@ -1,5 +1,6 @@
 app:
   name: homework-app
+  servicePortName: app-port
   baseHost: arch.homework
   port: 8000
   portName: web
@@ -59,31 +60,33 @@ ingress:
          rewrite ^ /health;
       }
 
+monitor:
+  name: metrics-monitor
 
-kube-prometheus-stack:
-  #https://stackoverflow.com/questions/70556984/kubernetes-node-exporter-container-is-not-working-it-shows-this-error-message
-  prometheus-node-exporter:
-    hostRootFsMount:
-      enabled: false
-  grafana:
-    ingress:
-      ingressClassName: nginx
-      enabled: true
-      hosts:
-        - grafana.arch.homework
-  prometheus:
-    serviceMonitor:
-      enabled: true
-      additionalLabels:
-        release: kube-prometheus
-    ingress:
-      ingressClassName: nginx
-      enabled: true
-      hosts:
-        - prometheus.arch.homework
-    prometheusSpec:
-      serviceMonitorSelectorNilUsesHelmValues: false
-      serviceMonitorSelector: {}
+#kube-prometheus-stack:
+#  #https://stackoverflow.com/questions/70556984/kubernetes-node-exporter-container-is-not-working-it-shows-this-error-message
+#  prometheus-node-exporter:
+#    hostRootFsMount:
+#      enabled: false
+#  grafana:
+#    ingress:
+#      ingressClassName: nginx
+#      enabled: true
+#      hosts:
+#        - grafana.arch.homework
+#  prometheus:
+#    serviceMonitor:
+#      enabled: true
+#      additionalLabels:
+#        release: kube-prometheus
+#    ingress:
+#      ingressClassName: nginx
+#      enabled: true
+#      hosts:
+#        - prometheus.arch.homework
+#    prometheusSpec:
+#      serviceMonitorSelectorNilUsesHelmValues: false
+#      serviceMonitorSelector: {}
 
 nginx-ingress:
   controller:
